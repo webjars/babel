@@ -11,10 +11,19 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>babel</artifactId>
-    <version>4.7.17-SNAPSHOT</version>
+    <version>4.7.16-1-SNAPSHOT</version>
     <name>Babel</name>
     <description>WebJar for Babel</description>
     <url>http://webjars.org</url>
+
+
+    <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>org.webjars</groupId>-->
+            <!--<artifactId>lodash</artifactId>-->
+            <!--<version>3.3.1</version>-->
+        <!--</dependency>-->
+    </dependencies>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -71,6 +80,10 @@
                                 <echo message="uncompress archive" />
                                 <gunzip src="${project.build.directory}/${project.artifactId}.tgz" dest="${project.build.directory}/${project.artifactId}.tar" />
                                 <untar src="${project.build.directory}/${project.artifactId}.tar" dest="${extractDir}" />
+
+                                <exec executable="npm" failonerror="true" dir="${extractDir}/package">
+                                    <arg value="install" />
+                                </exec>
 
                                 <echo message="moving resources" />
 
