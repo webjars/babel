@@ -21,6 +21,7 @@
         <upstream.version>4.7.16</upstream.version>
         <upstream.url>https://github.com/babel/babel/archive/v${upstream.version}.zip</upstream.url>
         <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${project.version}</destDir>
+        <jsBuildDir>${project.build.directory}/${project.artifactId}-${upstream.version}</jsBuildDir>
         <requirejs>
             {
             }
@@ -62,14 +63,29 @@
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <target>
+
                                 <echo message="download archive" />
+
                                 <get src="${upstream.url}" dest="${project.build.directory}/${project.artifactId}.zip" />
+
                                 <echo message="unzip archive" />
                                 <unzip src="${project.build.directory}/${project.artifactId}.zip" dest="${project.build.directory}" />
+
+                                <echo message="bootstrapping js project" />
+                                <exec executable="npm" failonerror="true" dir="${jsBuildDir}">
+                                    <arg value="install" />
+                                </exec>
+
+                                <echo message="building js project" />
+                                <exec executable="make" failonerror="true" dir="${jsBuildDir}">
+                                    <arg value="build" />
+                                </exec>
+
                                 <echo message="moving resources" />
                                 <move todir="${destDir}">
-                                    <fileset dir="${project.build.directory}/${project.artifactId}-${upstream.version}" />
+                                    <fileset dir="${jsBuildDir}/dist" />
                                 </move>
+
                             </target>
                         </configuration>
                     </execution>
