@@ -11,16 +11,27 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>babel</artifactId>
-    <version>4.7.17-SNAPSHOT</version>
+    <version>4.7.16-1-SNAPSHOT</version>
     <name>Babel</name>
     <description>WebJar for Babel</description>
     <url>http://webjars.org</url>
 
+
+    <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>org.webjars</groupId>-->
+            <!--<artifactId>lodash</artifactId>-->
+            <!--<version>3.3.1</version>-->
+        <!--</dependency>-->
+    </dependencies>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <upstream.version>4.7.16</upstream.version>
-        <upstream.url>https://github.com/babel/babel/archive/v${upstream.version}.zip</upstream.url>
+
+        <upstream.url>https://registry.npmjs.org/babel-core/-/babel-core-${upstream.version}.tgz</upstream.url>
         <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${project.version}</destDir>
+        <extractDir>${project.build.directory}/${project.artifactId}-${upstream.version}</extractDir>
         <requirejs>
             {
             }
@@ -62,14 +73,24 @@
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <target>
+
                                 <echo message="download archive" />
-                                <get src="${upstream.url}" dest="${project.build.directory}/${project.artifactId}.zip" />
-                                <echo message="unzip archive" />
-                                <unzip src="${project.build.directory}/${project.artifactId}.zip" dest="${project.build.directory}" />
+                                <get src="${upstream.url}" dest="${project.build.directory}/${project.artifactId}.tgz" />
+
+                                <echo message="uncompress archive" />
+                                <gunzip src="${project.build.directory}/${project.artifactId}.tgz" dest="${project.build.directory}/${project.artifactId}.tar" />
+                                <untar src="${project.build.directory}/${project.artifactId}.tar" dest="${extractDir}" />
+
+                                <exec executable="npm" failonerror="true" dir="${extractDir}/package">
+                                    <arg value="install" />
+                                </exec>
+
                                 <echo message="moving resources" />
+
                                 <move todir="${destDir}">
-                                    <fileset dir="${project.build.directory}/${project.artifactId}-${upstream.version}" />
+                                    <fileset dir="${extractDir}/package" />
                                 </move>
+
                             </target>
                         </configuration>
                     </execution>
