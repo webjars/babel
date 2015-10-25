@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>babel</artifactId>
-    <version>5.8.29-1</version>
+    <version>5.8.29-2-SNAPSHOT</version>
     <name>Babel</name>
     <description>WebJar for Babel</description>
     <url>http://webjars.org</url>
@@ -58,7 +58,7 @@
         <url>http://github.com/webjars/babel</url>
         <connection>scm:git:https://github.com/webjars/babel.git</connection>
         <developerConnection>scm:git:https://github.com/webjars/babel.git</developerConnection>
-        <tag>babel-5.8.29-1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <build>
