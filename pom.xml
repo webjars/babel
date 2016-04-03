@@ -11,19 +11,10 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>babel</artifactId>
-    <version>6.3.27-SNAPSHOT</version>
+    <version>6.3.26-1-SNAPSHOT</version>
     <name>Babel</name>
     <description>WebJar for Babel</description>
     <url>http://webjars.org</url>
-
-
-    <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>org.webjars</groupId>-->
-            <!--<artifactId>lodash</artifactId>-->
-            <!--<version>3.3.1</version>-->
-        <!--</dependency>-->
-    </dependencies>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -89,7 +80,7 @@
 
                                 <move todir="${destDir}">
                                     <fileset dir="${extractDir}/package">
-                                      <include name="browser*.js" />
+                                      <exclude name="node_modules/" />
                                     </fileset>
                                 </move>
 
